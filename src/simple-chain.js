@@ -1,32 +1,43 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const { NotImplementedError } = require("../extensions/index.js");
 
 /**
  * Implement chainMaker object according to task description
- * 
+ *
  */
-const chainMaker = {
+ const chainMaker = {
+  chain: [],
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.chain.length;
+    // возвращает текущую длину цепочки в виде числа;
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(value = "") {
+    this.chain.push(`( ${value} )`);
+    return this;
+    // добавляет ссылку, содержащую stringп редставление в value цепочку;
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(position) {
+    if (!Number.isInteger(position) || (position <= 0) || position > this.getLength()) {
+      this.chain = []
+      throw new Error("You can't remove incorrect link!");
+    } else {
+      this.chain.splice(position - 1, 1);
+      return this;
+    }
+    // убирает звено цепи в указанном положении;
   },
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.chain.reverse();
+    return this;
+    // переворачивает цепь;
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    let finishChain = this.chain
+    this.chain = []
+    return finishChain.join("~~");
+    // заканчивается цепочка и returns она.
+  },
 };
 
 module.exports = {
-  chainMaker
+  chainMaker,
 };
